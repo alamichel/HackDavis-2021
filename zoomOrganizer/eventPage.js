@@ -1,4 +1,4 @@
-var menuItem = {
+/* var menuItem = {
     "id": "spendMoney",
     "title": "Spend Money",
     "contexts": ["selection"]
@@ -42,3 +42,4 @@ chrome.contextMenus.onClicked.addListener(function (clickData) {
 chrome.storage.onChanged.addListener(function (changes, storageName) {
     chrome.browserAction.setBadgeText({ "text": changes.total.newValue.toString() });
 });
+ */
