@@ -1,7 +1,7 @@
 console.log('background running');
 
 // alt+a command
-chrome.commands.onCommand.addListener(function(command) {
+chrome.commands.onCommand.addListener(function (command) {
     console.log('alt+a');
     var notifOptions = {
         type: "basic",
@@ -9,9 +9,9 @@ chrome.commands.onCommand.addListener(function(command) {
         title: "Command Test",
         message: "Alt+A pressed."
     };
-   
+
     chrome.notifications.create('commandNotif', notifOptions);
-   
+
 });
 
 // alarm function
@@ -28,6 +28,6 @@ if (differenceInMs < 5000) {
         title: "Meeting soon",
         message: "5 seconds till meeting."
     };
-   
+
     chrome.notifications.create('timeNotif', notifOptions);
 };
