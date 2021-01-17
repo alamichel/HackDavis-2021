@@ -15,11 +15,6 @@
     "default_popup": "popup.html"
   },
 
-  "background": {
-    "scripts": ["background.js"],
-    "persistent": false
-  },
-
   "options_page": "options.html",
 
   "permissions": [
@@ -28,6 +23,11 @@
     "contextMenus",
     "alarms"
   ],
+
+  "background": {
+    "scripts": ["jquery-3.1.0.min.js", "background.js"],
+    "persistent": false
+  },
 
   "commands":
 	{

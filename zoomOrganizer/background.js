@@ -1,5 +1,9 @@
 console.log('background running');
 
+chrome.storage.sync.get('meetingTime',function(zoom){
+    $('#meetingTime').val(zoom.meetingTime);
+});
+
 // alt+a command
 chrome.commands.onCommand.addListener(function(command) {
     console.log('alt+a');
