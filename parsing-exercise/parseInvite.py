@@ -3,7 +3,7 @@ import datetime as dt
 
 topic = ''
 occurences = []
-meetingLink = ''
+zoomLink = ''
 meetingID = ''
 password = ''
 timeZone = ''
@@ -50,10 +50,20 @@ with open('C:\\Users\\jessi\\OneDrive - University of California, Davis\\program
             elif re.compile('Every').match(line):
                 # clear original time, since that will be included in the list of dates/times following this line
                 occurences.clear()
+            elif re.compile('https://').match(line):
+                zoomLink = line.strip()
+                continue
+            elif re.compile('Meeting ID:').match(line):
+                meetingID = line[11:].strip()
+            elif re.compile('Password:').match(line):
+                password = line[9:].strip()
 
-print(topic)
-print(timeZone)
-print(occurences)
-#meetingLink = ''
-#meetingID = ''
-#password = ''
+print(f"Topic: {topic}\n")
+print(f"Zoom Link: {zoomLink}\n")
+print(f"Meeting ID: {meetingID}")
+if password != '':
+    print(f"Password: {password}")
+print(f"\nHost Time Zone: {timeZone}")
+print("Meeting occurences:")
+for occurence in occurences:
+    print(occurence.strftime("\t%B %d %Y at %I:%M %p"))

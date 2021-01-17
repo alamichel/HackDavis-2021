@@ -15,7 +15,7 @@ if (id_index - 12 > -1) {
   print(id_content);
 } else {
   // Missing keywords; assume no ID given
-  print("not found");
+  print("Not Found");
 }
 
 // Get Passcode (Passcode: [Until a space is reached]) (10char max, 1char min)
