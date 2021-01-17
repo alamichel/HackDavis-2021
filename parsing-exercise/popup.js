@@ -53,90 +53,32 @@ $(function(){
             //  General Form: [3ltr month] [1/2 num day], [4 num year] [AM/PM]
             //  Genl. Form (end of 1st line): [Time Zone] Time ([Region])
             //      --> region info not as important as time zone
-            //  Sample RegExp (Genl. Form): \D{3}\s\d\d?,\s\d{4}\s\d\d?:\d{2}\s[AP]M
-            // TO-DO: Redo code block to just depend on "Time: " keyword;
-            //  Look into using RegExp to simplify code, allow for more general use
             buf_char = '';
-            var date_content = '';
+            var date_array = '';
+            var date_content = [];
             var date_convert = '';
-            // FOR MULTIPLE DATES/TIMES (Date Time: )
-            var date_index = text_input.search("Date Time: ") + 11;
-            if (date_index - 11 > -1) {
-                var date_array = [];
-                date_content = text_input.charAt(date_index++);
-                while (buf_char !== 'M') {
-                    buf_char = text_input.charAt(date_index++);
-                    if (buf_char === '\0') {
-                        break;
-                    } else {
-                        date_content += buf_char;
-                    }
-                }
-
-                // TO-DO: Read in time zone specs; carry over to rest of dates in invite
-                // @HERE: TEMPORARY FIX UNTIL TIME ZONE IS ADDRESSED
-
-
-                // Add first date to array of dates
-                date_convert = new Date(date_content);
-                date_array.push(date_convert);
-
-                // Ignore the reoccurrence details
-                var end_parenthesis_count = 0;
-                while (buf_char !== ')' && end_parenthesis_count !== 2) {
-                    buf_char = text_input.charAt(date_index++);
-                    if (buf_char === ')') {
-                        end_parenthesis_count++;
-                    }
-                }
-
-                // Skip the space/tab btwn the parenthesis and repeated date
-                // Move to line with date; then skip it
-                date_index += 6;
-                while (buf_char !== 'M') {
-                    buf_char = text_input.charAt(date_index++);
-                    if (buf_char === '\0') {
-                        break;
-                    }
-                }
-
-                // Move to next line; start reading dates from here
-                date_index += 6;
-                // TO-DO: Need conditional to signal stop (e.g. next line is blank, EOF)
-                // @HERE: TEMPORARILY USING EOF AS ENDPOINT
-                while(buf_char !== '\0'){ 
-                    date_content = text_input.charAt(date_index++);
-                    while (buf_char !== 'M') {
-                        buf_char = text_input.charAt(date_index++);
-                        if (buf_char === '\0') {
-                            break;
-                        } else {
-                            date_content += buf_char;
-                        }
-                    }
-                    date_convert = new Date(date_content);
-                    date_array.push(date_convert);
-                    date_index += 6;
-                }
-
-                $('#date_time').text(date_array);
+            var date_regex = /\D{3}\s\d\d?,\s\d{4}\s\d\d?:\d{2}\s[AP]M/gm;
+            var date_index = text_input.search("Time: ");
+            if (date_index < 0) {
+                // Missing keyword; ignore invite dates
+                $('#date_time').text('');
             } else {
-                // FOR ONE DATE/TIME (Time: )
-                date_index = text_input.search("Time: ") + 6;
-                if (date_index - 6 > -1) {
-                    date_content = text_input.charAt(date_index++);
-                    while (buf_char !== '(') {
-                        buf_char = text_input.charAt(date_index++);
-                        if (buf_char === '\0' || buf_char === '(') {
-                            break;
-                        } else {
-                            date_content += buf_char;
-                        }
+                // Look for all dates and times
+                date_array = text_input.match(date_regex);
+
+                if (date_array.length === 1) {
+                    // Only one date/time found
+                    date_content = new Date(date_array[0]);
+                    $('#date_time').text(date_content);
+                } else if (date_array.length > 1) {
+                    // Multiple dates/times found; ignore the first one as it is repeated later
+                    for (var i = 1; i < date_array.length; i++) {
+                        date_convert = new Date(date_array[i]);
+                        date_content.push(date_convert);
                     }
-                    date_convert = new Date(date_content);
-                    $('#date_time').text(date_convert[0]);
-                } else {
-                    $('#date_time').text('');
+
+                    // Print out the first date/time and the number of remaining occurances
+                    $('#date_time').text(date_content[1] + ' and ' + (date_content.length - 1) + ' other occurance(s).');
                 }
             }
         }); 
