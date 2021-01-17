@@ -1,7 +1,10 @@
+/* WHEN TESTING ON CHROME, MAKE SURE "testParse.js" IS UNCOMMENTED AND BEING USED */
+
 import LocalDateTime from java.time
 import DateTimeFormatter from java.time
 
-text_input = FileReader.readasText("test1.txt");
+//text_input = FileReader.readasText("test1.txt");  // for testing via debugger
+var text_input = document.getElementById('message').value;  // for testing on Chrome
 
 // Get Meeting ID (Meeting ID: XXX XXXX XXXX)
 // IDEA: Save Meeting ID as Number instead of String
