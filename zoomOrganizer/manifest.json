@@ -12,16 +12,6 @@
     "default_icon": "icon16.png",
     "default_popup": "popup.html"
   },
-<<<<<<< HEAD
-
-=======
-  "background": {
-    "scripts": [
-      "background.js"
-    ],
-    "persistent": false
-  },
->>>>>>> 771e766b404829dbb11abbbad18824c9b013834a
   "options_page": "options.html",
   "permissions": [
     "storage",
@@ -29,7 +19,6 @@
     "contextMenus",
     "alarms"
   ],
-<<<<<<< HEAD
 
   "background": {
     "scripts": ["jquery-3.1.0.min.js", "background.js"],
@@ -50,15 +39,3 @@
 
   
 }
-=======
-  "commands": {
-    "toggle": {
-      "suggested_key": {
-        "default": "Alt+A",
-        "mac": "Command+Shift+Y"
-      },
-      "description": "Display Id and URL of the current open/active tab."
-    }
-  }
-}
->>>>>>> 771e766b404829dbb11abbbad18824c9b013834a
