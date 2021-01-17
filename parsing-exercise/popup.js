@@ -1,5 +1,12 @@
 $(function(){
 
+    // Enlightenment:
+    //   chrome.storage.sync - Syncs with user that is logged in
+    //      MAX_ITEMS = 512 (max. num. of items that can be stored in sync storage)
+    //   chrome.storage.local - Stays on local browser/machine
+    //      QUOTA_BYTES = 5242880 (max. amt. in bytes of data that can be stored in local storage);
+    //          ignored if unlimitedStorage permission is enabled
+
     chrome.storage.sync.get(['meeting_id', 'passcode', 'date_time'], function(agenda){
         $('#meeting_id').text(agenda.meeting_id);
         $('#passcode').text(agenda.passcode);
@@ -42,7 +49,13 @@ $(function(){
                 $('#passcode').text('');
             }
 
-            // Get Date & Time 
+            // Get Date & Time (HINT: All months are abbreviated to three letters)
+            //  General Form: [3ltr month] [1/2 num day], [4 num year] [AM/PM]
+            //  Genl. Form (end of 1st line): [Time Zone] Time ([Region])
+            //      --> region info not as important as time zone
+            //  Sample RegExp (Genl. Form): \D{3}\s\d\d?,\s\d{4}\s\d\d?:\d{2}\s[AP]M
+            // TO-DO: Redo code block to just depend on "Time: " keyword;
+            //  Look into using RegExp to simplify code, allow for more general use
             buf_char = '';
             var date_content = '';
             var date_convert = '';
