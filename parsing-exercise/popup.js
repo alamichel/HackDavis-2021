@@ -42,25 +42,89 @@ $(function(){
                 $('#passcode').text('');
             }
 
-            // Get Date & Time (Time: )
-            // CURRENTLY FOR ONE DATE/TIME, NOT MULTIPLE
+            // Get Date & Time 
             buf_char = '';
             var date_content = '';
-            var date_index = text_input.search("Time: ") + 6;
-            if (date_index - 6 > -1) {
+            var date_convert = '';
+            // FOR MULTIPLE DATES/TIMES (Date Time: )
+            var date_index = text_input.search("Date Time: ") + 11;
+            if (date_index - 11 > -1) {
+                var date_array = [];
                 date_content = text_input.charAt(date_index++);
-                while (buf_char !== '(') {
+                while (buf_char !== 'M') {
                     buf_char = text_input.charAt(date_index++);
-                    if (buf_char === '\0' || buf_char === '(') {
+                    if (buf_char === '\0') {
                         break;
                     } else {
                         date_content += buf_char;
                     }
                 }
-                 var date_convert = new Date(date_content);
-                $('#date_time').text(date_convert);
+
+                // TO-DO: Read in time zone specs; carry over to rest of dates in invite
+                // @HERE: TEMPORARY FIX UNTIL TIME ZONE IS ADDRESSED
+
+
+                // Add first date to array of dates
+                date_convert = new Date(date_content);
+                date_array.push(date_convert);
+
+                // Ignore the reoccurrence details
+                var end_parenthesis_count = 0;
+                while (buf_char !== ')' && end_parenthesis_count !== 2) {
+                    buf_char = text_input.charAt(date_index++);
+                    if (buf_char === ')') {
+                        end_parenthesis_count++;
+                    }
+                }
+
+                // Skip the space/tab btwn the parenthesis and repeated date
+                // Move to line with date; then skip it
+                date_index += 6;
+                while (buf_char !== 'M') {
+                    buf_char = text_input.charAt(date_index++);
+                    if (buf_char === '\0') {
+                        break;
+                    }
+                }
+
+                // Move to next line; start reading dates from here
+                date_index += 6;
+                // TO-DO: Need conditional to signal stop (e.g. next line is blank, EOF)
+                // @HERE: TEMPORARILY USING EOF AS ENDPOINT
+                while(buf_char !== '\0'){ 
+                    date_content = text_input.charAt(date_index++);
+                    while (buf_char !== 'M') {
+                        buf_char = text_input.charAt(date_index++);
+                        if (buf_char === '\0') {
+                            break;
+                        } else {
+                            date_content += buf_char;
+                        }
+                    }
+                    date_convert = new Date(date_content);
+                    date_array.push(date_convert);
+                    date_index += 6;
+                }
+
+                $('#date_time').text(date_array);
             } else {
-                $('#date_time').text('');
+                // FOR ONE DATE/TIME (Time: )
+                date_index = text_input.search("Time: ") + 6;
+                if (date_index - 6 > -1) {
+                    date_content = text_input.charAt(date_index++);
+                    while (buf_char !== '(') {
+                        buf_char = text_input.charAt(date_index++);
+                        if (buf_char === '\0' || buf_char === '(') {
+                            break;
+                        } else {
+                            date_content += buf_char;
+                        }
+                    }
+                    date_convert = new Date(date_content);
+                    $('#date_time').text(date_convert[0]);
+                } else {
+                    $('#date_time').text('');
+                }
             }
         }); 
     });

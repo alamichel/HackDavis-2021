@@ -1,28 +1,35 @@
 {
   "manifest_version": 2,
-
-  "name": "Budget Manager",
-  "description": "This extension tracks your overall spendings.",
+  "name": "Zoom Organizer",
+  "description": "This extension organizes Zoom.",
   "version": "1.0",
   "icons": {
     "128": "icon128.png",
     "48": "icon48.png",
     "16": "icon16.png"
   },
-
   "browser_action": {
     "default_icon": "icon16.png",
     "default_popup": "popup.html"
   },
+<<<<<<< HEAD
 
+=======
+  "background": {
+    "scripts": [
+      "background.js"
+    ],
+    "persistent": false
+  },
+>>>>>>> 771e766b404829dbb11abbbad18824c9b013834a
   "options_page": "options.html",
-
   "permissions": [
     "storage",
     "notifications",
     "contextMenus",
     "alarms"
   ],
+<<<<<<< HEAD
 
   "background": {
     "scripts": ["jquery-3.1.0.min.js", "background.js"],
@@ -43,3 +50,15 @@
 
   
 }
+=======
+  "commands": {
+    "toggle": {
+      "suggested_key": {
+        "default": "Alt+A",
+        "mac": "Command+Shift+Y"
+      },
+      "description": "Display Id and URL of the current open/active tab."
+    }
+  }
+}
+>>>>>>> 771e766b404829dbb11abbbad18824c9b013834a
