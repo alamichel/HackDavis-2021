@@ -1,12 +1,5 @@
 $(function(){
 
-    // Enlightenment:
-    //   chrome.storage.sync - Syncs with user that is logged in
-    //      MAX_ITEMS = 512 (max. num. of items that can be stored in sync storage)
-    //   chrome.storage.local - Stays on local browser/machine
-    //      QUOTA_BYTES = 5242880 (max. amt. in bytes of data that can be stored in local storage);
-    //          ignored if unlimitedStorage permission is enabled
-
     chrome.storage.sync.get(['meeting_id', 'passcode', 'date_time'], function(agenda){
         $('#meeting_id').text(agenda.meeting_id);
         $('#passcode').text(agenda.passcode);

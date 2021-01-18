@@ -14,7 +14,7 @@ chrome.commands.onCommand.addListener(function (command) {
         type: "basic",
         iconUrl: "icon48.png",
         title: "Command Test",
-        message: meeting.valueOf()
+        message: "Your meeting is starting soon."
     };
 
     chrome.notifications.create('commandNotif', notifOptions);
